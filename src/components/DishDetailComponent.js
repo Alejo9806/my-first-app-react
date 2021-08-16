@@ -1,13 +1,12 @@
 import React  from 'react';
-import {Card,CardImg,CardTitle,CardText,CardBody,ListGroup, ListGroupItem } from 'reactstrap'
-
+import {Card,CardImg,CardTitle,CardText,CardBody, ListGroupItem , Breadcrumb,BreadcrumbItem} from 'reactstrap'
+import {Link} from 'react-router-dom'
 
 
     function RenderDish({dishDetail}){
         if(dishDetail != null){
             return(
-                <div className="row">
-                    <div className="col-12 col-sm-12 col-md-5 col-lg-5 m-1"> 
+                    <div> 
                         <Card>
                             <CardImg top src={dishDetail.image} alt={dishDetail.name} />
                             <CardBody>
@@ -16,11 +15,6 @@ import {Card,CardImg,CardTitle,CardText,CardBody,ListGroup, ListGroupItem } from
                             </CardBody>
                         </Card>
                     </div>
-                    <div className="col-12 col-sm-12 col-md-5 col-lg-5 m-1"> 
-                        <h4>Comments</h4>
-                        <ListGroup><RenderComments dishComments={dishDetail.comments}/></ListGroup>                      
-                    </div>
-                </div>
             );
         }else{
             return(null)
@@ -32,9 +26,12 @@ import {Card,CardImg,CardTitle,CardText,CardBody,ListGroup, ListGroupItem } from
                 dishComments.map((comment)=>{
                     let date = new Intl.DateTimeFormat('en-US',{year:'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(comment.date)));
                     return(
-                        <div key={comment.id}>
-                            <ListGroupItem className="border-0">{comment.comment}</ListGroupItem>
-                            <ListGroupItem className="border-0">-- {comment.author}, {date}</ListGroupItem>
+                        <div> 
+                            <h4>Comments</h4>                                   
+                            <div key={comment.id}>
+                                <ListGroupItem className="border-0">{comment.comment}</ListGroupItem>
+                                <ListGroupItem className="border-0">-- {comment.author}, {date}</ListGroupItem>
+                            </div>
                         </div>
                        
                     )
@@ -48,7 +45,25 @@ import {Card,CardImg,CardTitle,CardText,CardBody,ListGroup, ListGroupItem } from
         console.log('DishDetail Component render')
         return(
             <div className="container">
-                <RenderDish dishDetail={props.dishDetail}/>
+                <div className="row">
+                    <Breadcrumb>
+                        <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
+                        <BreadcrumbItem><Link to='/menu'>Menu</Link></BreadcrumbItem>
+                        <BreadcrumbItem active>{props.dishDetail.name}</BreadcrumbItem>
+                    </Breadcrumb>
+                    <div className="col-12 ">
+                        <h3>{props.dishDetail.name}</h3>
+                        <hr/>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12 col-md-5 m-1">
+                        <RenderDish dishDetail={props.dishDetail}/>
+                    </div>
+                    <div className="col-12 col-md-5 m-1">
+                        <RenderComments dishComments={props.comments}/>
+                    </div>
+                </div>
             </div>
         );
     }
