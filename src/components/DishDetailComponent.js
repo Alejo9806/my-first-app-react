@@ -42,7 +42,6 @@ const minLength = (len) => (val) => val && (val.length >= len);
                        
                     )
                 })
-                
             )
         }else{
             return(null)
@@ -53,8 +52,8 @@ const minLength = (len) => (val) => val && (val.length >= len);
     const DishDetail = (props) =>{
 
         const handleSubmit=(values) => {
-            console.log('Current State is: ' + JSON.stringify(values));
-            alert('Current State is: ' + JSON.stringify(values));
+            toggleModal();
+            props.addComment(props.dishDetail.id,values.rating,values.author,values.comment)
             // event.preventDefault();
         }
 
@@ -102,7 +101,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                             </Row>
                             <Row className="form-group">
                                 <Label htmlFor="password">Your Name</Label>
-                                <Control.text model=".name" id="name" name="name"
+                                <Control.text model=".author" id="author" name="author"
                                         placeholder="Your Name"
                                         className="form-control"
                                         validators={{
@@ -111,7 +110,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                                          />
                                     <Errors
                                         className="text-danger"
-                                        model=".name"
+                                        model=".author"
                                         show="touched"
                                         messages={{
                                             required: 'Required',
