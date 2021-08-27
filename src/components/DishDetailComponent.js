@@ -3,6 +3,7 @@ import {Card,CardImg,CardTitle,CardText,CardBody, ListGroupItem , Breadcrumb,Bre
 import {Link} from 'react-router-dom'
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -14,7 +15,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
             return(
                     <div> 
                         <Card>
-                            <CardImg top src={dishDetail.image} alt={dishDetail.name} />
+                            <CardImg top src={baseUrl + dishDetail.image} alt={dishDetail.name} />
                             <CardBody>
                                 <CardTitle className="h2">{dishDetail.name}</CardTitle>
                                 <CardText>{dishDetail.description}</CardText>
